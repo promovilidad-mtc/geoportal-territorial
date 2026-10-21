@@ -1512,8 +1512,11 @@ function init(){
   const area=numeric(pick(props,[/^areakm2$/,/^superficiekm2$/,/^extensionkm2$/]));
   const population=numeric(pick(props,[/^totpob25$/,/^totalpob25$/,/^pob2025$/,/^poblacion2025$/,/^poblaciontotal$/,/^pobtotal$/,/^totalpob$/]));
   const classification=pick(props,[/^cat(?:egoria)?siccep$/,/^catsincep$/,/^clasificacion$/,/^rangoconp0$/]);
-  const political=pick(props,[/^fpolconp0$/,/^funcionpolitica$/,/^funcpolitica$/]);
-  const economic=pick(props,[/^funconp0$/,/^funcioneconomica$/,/^funceconomica$/]);
+  const political=pick(props,[/^fpolconp0$/,/^funcionpolitica$/,/^funcpolitica$/,/^funcionpoliticaconp0$/]);
+  const economic=pick(props,[/^funconp0$/,/^funcioneconomica$/,/^funceconomica$/,/^funcioneconomicaconp0$/]);
+  const urbanRole=pick(props,[/^rolconp0$/,/^rolurbano$/,/^rol$/]);
+  const urbanSystem=pick(props,[/^nomsiste0$/,/^nomsiste$/,/^sistemaurbano$/,/^sistema$/]);
+  const macroSystem=pick(props,[/^nommacro0$/,/^macrosistema$/]);
   const provinces=numeric(pick(props,[/^nprovincias$/,/^provincias$/,/^numprovincias$/]));
   const districts=numeric(pick(props,[/^ndistritos$/,/^distritos$/,/^numdistritos$/]));
   const state=JSON.stringify([name,props]);if(state===previous)return;previous=state;
@@ -1526,7 +1529,7 @@ function init(){
   card.innerHTML='<div class="pm37-head"><div><div class="pm37-eyebrow">Conoce tu ciudad · ámbito PROMOVILIDAD</div><h3>'+esc(name)+'</h3>'+(department?'<div class="pm37-dept">'+esc(department)+'</div>':'')+'</div></div>'+
    (cards.length?'<div class="pm38-grid">'+cards.join('')+'</div>':'')+
    '<div class="pm38-sub">Caracterización territorial</div>'+
-   row('Clasificación SICCEP',classification)+row('Función política',political)+row('Función económica',economic)+row('Provincias',provinces!==null?formatted(provinces):null)+row('Distritos',districts!==null?formatted(districts):null)+
+   row('Clasificación SICCEP',classification)+row('Función política',political)+row('Función económica',economic)+row('Rol urbano',urbanRole)+row('Sistema urbano',urbanSystem)+row('Macrosistema',macroSystem)+row('Provincias',provinces!==null?formatted(provinces):null)+row('Distritos',districts!==null?formatted(districts):null)+
    '<p class="pm38-more">Fuente: MVCS · SICCEP 2025 · Más atributos en la consulta del polígono.</p>';
   // Los módulos sin datos permanecen preparados internamente; no mostrar tarjetas vacías.
   const explore=document.getElementById('pm36Explore');if(explore)explore.hidden=false;
@@ -1632,7 +1635,7 @@ function render(){
  const top=k=>{let counts={};records.forEach(r=>(r[k]||[]).forEach(([name,n])=>counts[name]=(counts[name]||0)+n));return Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,3)};
  const listing=k=>top(k).map(([name,n])=>'<div>'+safe(name)+' · <b>'+fmt(n)+'</b></div>').join('');
  const box=document.createElement('section');box.id='pm42-dept';
- box.innerHTML='<h4>Siniestralidad fatal · '+safe(dep)+'</h4><div class="pm42-sub">Histórico departamental · '+safe(year==='all'?years[0]+'–'+years[years.length-1]:year)+'</div><label style="font-size:11px" for="pm42-year">Año de consulta</label><select id="pm42-year"><option value="all">Todos los años</option>'+years.map(y=>'<option value="'+y+'" '+(year===y?'selected':'')+'>'+y+'</option>').join('')+'</select><div class="pm42-stats"><div class="pm42-stat"><strong>'+fmt(sum('total'))+'</strong><small>Siniestros fatales</small></div><div class="pm42-stat"><strong>'+fmt(sum('fallecidos'))+'</strong><small>Fallecidos</small></div><div class="pm42-stat"><strong>'+fmt(sum('lesionados'))+'</strong><small>Lesionados</small></div></div><div class="pm42-list"><strong>Principales tipos</strong>'+listing('tipos')+'</div><div class="pm42-list"><strong>Principales causas registradas</strong>'+listing('causas')+'</div><div class="pm42-sub" style="margin-top:8px">Cobertura: histórico del departamento. Fuente: Base de siniestros fatales de la PNP.</div>';
+ box.innerHTML='<h4>Siniestros con fallecidos · '+safe(dep)+'</h4><div class="pm42-sub">Serie departamental de siniestros fatales · '+safe(year==='all'?years[0]+'–'+years[years.length-1]:year)+'</div><label style="font-size:11px" for="pm42-year">Año de consulta</label><select id="pm42-year"><option value="all">Todos los años</option>'+years.map(y=>'<option value="'+y+'" '+(year===y?'selected':'')+'>'+y+'</option>').join('')+'</select><div class="pm42-stats"><div class="pm42-stat"><strong>'+fmt(sum('total'))+'</strong><small>Siniestros con fallecidos</small></div><div class="pm42-stat"><strong>'+fmt(sum('fallecidos'))+'</strong><small>Fallecidos</small></div><div class="pm42-stat"><strong>'+fmt(sum('lesionados'))+'</strong><small>Lesionados</small></div></div><div class="pm42-list"><strong>Principales tipos</strong>'+listing('tipos')+'</div><div class="pm42-list"><strong>Principales causas registradas</strong>'+listing('causas')+'</div><div class="pm42-sub" style="margin-top:8px">Cobertura: departamento completo. Fuente: PNP · Base de siniestros fatales, gestionada por el ONSV-MTC. Esta serie NO es el histórico general de todos los siniestros. El histórico PNP 2008–2025 (incluidos no fatales; 2025 preliminar, enero–octubre) se integrará por separado desde su archivo de origen.</div>';
  card.appendChild(box);
  box.querySelector('select').addEventListener('change',e=>{chosenYear=e.target.value;lastKey='';render()});lastKey=key;
 }
