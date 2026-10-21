@@ -1,0 +1,8 @@
+﻿Bloque,Capa o conjunto,Fuente,Evidencia / nota interna,Acción
+Límites políticos,Departamentos / Provincias / Distritos,GEOPERÚ / PCM,Configurado; probado por usuaria,visible
+Hidrografía,Hidrografía IGN 1:100 000,IGN,Servicio multicapa; probado por usuaria; subcapas por separar,visible
+Hidrografía,Hidrografía MINAM,MINAM,Usuaria reporta que no muestra información,oculto
+Curvas de nivel,Curvas de nivel / cotas,IGN 1:100 000,Detectadas como subcapas de servicio mixto; pendiente separar,pendiente
+Equipamiento,Educación / salud,Fuentes por verificar,No hay comprobación visual en este ciclo,pendiente
+Peligros y riesgos,Vulnerabilidad física MINAM,MINAM,Servicio funciona según captura; simbología excesivamente grande,visible
+Movilidad PROMOVILIDAD,Red vial / transporte,MVCS / otras,Conservar configuración existente; revisar capa por capa,sin cambios
